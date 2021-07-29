@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "version": "1.0.0",
+  "name": "Azure DevOps Pull Request Improvements",
+  "description": "Improvements for Azure DevOps PRs",
+ 
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ]
+}
