@@ -1,6 +1,7 @@
 // import * as load from '@commitlint/load';
 // import * as lint from '@commitlint/lint';
 
+// console.log(typeof load);
 (() => {
 
 

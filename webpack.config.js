@@ -1,42 +1,40 @@
-import * as path from "path";
-import CopyPlugin from "copy-webpack-plugin";
-import NodePolyfillPlugin from "node-polyfill-webpack-plugin";
+const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
 
-const config = {
+module.exports = {
   devtool: "source-map",
-  entry: {
-    content: path.resolve("src/content.ts"),
-  },
-  output: { path: path.resolve("dist"), filename: "[name].js" },
+  entry: './src/content.ts',
+
   module: {
     rules: [
       {
-        test: /\.ts(x)?$/,
-        loader: "ts-loader",
+        test: /\.tsx?$/,
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
     ],
   },
   resolve: {
-    extensions: [".js", ".jsx", ".tsx", ".ts"],
-    alias: {
-      "react-dom": "@hot-loader/react-dom",
-    },
+    extensions: ['.tsx', '.ts', '.js'],
     fallback: {
       "fs": false,
-      "child_process": false,
-      "module": false
+      "module": false,
+      process: false,
     },
   },
-  devServer: {
-    contentBase: "./dist",
+  output: {
+    filename: 'content.js',
+    path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
     new NodePolyfillPlugin(),
     new CopyPlugin({
       patterns: [{ from: "public", to: "." }],
     }),
-  ],
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
+  ]
 };
-
-export default config;
